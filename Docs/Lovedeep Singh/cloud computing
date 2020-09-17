@@ -1,0 +1,63 @@
+# Host your own website using AWS.
+## Required
+- AWS Account
+  - **You must provide your Debit/Credit Card details to create an account**
+- Basic HTML/CSS/Javascript Programming
+- Linux Machine
+### Setting up a storage bucket.
+- Bucket is a storage container, stores all the objects.
+- Create a bucket by going to ``` Services ``` tab on the navigation bar.
+- Navigate to ``` All Services ``` > ``` S3 ```
+- ``` Create Bucket ```
+- Fill all requiered. ``` Next ```
+- Set all unchecked ``` Next ```
+- Set all unchecked ``` Next ``` > ``` Create Bucket ```
+
+### Uploading objects into the bucket.
+- There are two ways to upload your objects onto the bucket.
+  - [x] **GUI Mode**
+  - [x] **CLI Mode**
+ ### GUI Mode
+ - Open your bucket.
+ - ``` Upload ``` > ``` Add Files ``` > ``` Next ```
+ - Under ``` Manage public permissions ``` > Dropdown and select ```Grant public read access to the objects``` > ``` Upload ```
+ - Thats it! You can check the URL of that object by openeing it.
+ ### CLI Mode
+ - CLI is ```Command Line Interface```, you can upload your objects to the bucket by a single command.
+ - You must have the Security Credientials to get the CLI work.
+ ### Getting the Security Credentials.
+ - In the AWS, Navigation bar, Top-Right > ``` YourName``` > Dropdown and select ``` My Security Credentials ```
+ - Third Option, ``` Access keys (access key ID and secret access key) ``` > ``` Create a New Access Key ```
+ - Download the .csv file that contains your keys.
+
+### Uploading via CLI
+- You have to download the AWS package. Copy and paste these commans in your terminal
+- On Linux PC
+```shell
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+- On ARM Linux
+```shell
+pip3 install awscli --upgrade --user
+export PATH=/home/pi/.local/bin:$PATH
+aws --version
+ ```
+ - Configure your machine to the AWS server.
+```
+$ aws configure
+```
+- Open the .csv file containg the access keys, copy and paste the credentials.
+```shell
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: Press Enter
+Default output format [None]: Press Enter
+```
+- Your machine is now configured. 
+- Upload a file by the command.
+```shell
+aws s3 cp /.../Sourcefile s3://YourBucketName/ --acl public-read
+```
+- Done, Your files are on the cloud

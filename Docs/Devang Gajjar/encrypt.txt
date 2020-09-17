@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------------------
+
+====SETTING UP THE PENDRIVE WITH LUKS
+
+
+Step 1: Here we will allocate the pendirve to the LUKS.We are converting the storage media in LUKS format.
+
+ 	$ sudo cryptsetup luksFormat /dev/sdb    
+
+Step 2: Once storage is been converted into LUKS format then we will create a mapper called "encrypt"
+	(!mapper is basically a bin like system which will store all the data we gonna encrypt with LUKS).
+	
+	$ sudo cryptsetup luksOpen /dev/sdb encrypt
+
+Step 3: Thereafter, the storage media needs to given a file format in order to make it readble.
+	There are three file system we can assign here .ext4, .vfat, .ntfs 
+
+	$ sudo mkfs.ext4 /dev/mapper/encrypt 
+	
+	$ sudo mkfs.vfat /dev/mapper/encrypt 
+	
+	$ sudo mkfs.ntfs /dev/mapper/encrypt 
+	
+	**********************Your device is now Encrypted***************************
+	------------------------------------------------------------------------------
+	===== ACCESS THE CRYPT PENDRIVE
+	
+	Here we will mount the pendrive to some other directory to use that pendrive in working OS.
+
+	$ mkdir /home/baps/Pendrive
+	
+	$ sudo mount /dev/mapper/encrypt /home/baps/Pendrive
+	
+	------------------------------------------------------------------------------
+	===EXIT THE LUKS SOFTWARE
+	
+ 	====To save the storage from doing the malfunction proper closing of the LUKS is also necessary.
+Step 1:	Firstly, we need to unmount the device
+
+	$ sudo umount /home/baps/Pendrive
+	
+Step 2: Then we need to close the LUKS setup and make the pendrive again normal storage device.
+
+	$ sudo cryptsetup luksClose /dev/mapper/encrypt
